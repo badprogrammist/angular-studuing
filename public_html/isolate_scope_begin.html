@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .panel {
+                background: aliceblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="choreApp">
+            <div ng-controller="ChoreController">
+                <kid done="logChore(chore)"></kid>
+                {{log}}
+            </div>
+            
+        </div>
+
+
+        <script src="js/libs/angular-1.2.16/angular.min.js"></script>
+        <script type="text/javascript">
+            var choreApp = angular.module("choreApp", []);
+            
+            choreApp.controller("ChoreController", function($scope){
+                $scope.logChore = function(chore) {
+                    $scope.log = chore + " is done";
+                }
+            });
+            
+            choreApp.directive("kid", function() {
+                return {
+                    restrict : "E",
+                    scope: {
+                        done : "&"
+                    },
+                    template : "<input type='text' ng-model='chore'/> {{chore}} <button ng-click='done({chore:chore})'>Done</button>"
+                };
+            });
+            
+            
+
+            
+        </script>
+    </body>
+</html>

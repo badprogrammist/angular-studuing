@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <div ng-app="myApp">
+            <div ng-controller="FirstController">
+                <input type="text" ng-model="data.message"/>
+                <h1>{{data.message}}</h1>
+            </div>
+            <div ng-controller="SecondController">
+                <input type="text" ng-model="data.message"/>
+                <h1>{{data.message}}</h1>
+                <h1>{{reverseMessage(data.message)}}</h1>
+            </div>
+        </div>
+
+
+        <script src="js/libs/angular-1.2.16/angular.min.js"></script>
+        <script type="text/javascript">
+            var myApp = angular.module("myApp", []);
+            myApp.factory("DataService", function() {
+                return {message: "I'am data from a service"};
+            });
+
+            function FirstController($scope, DataService) {
+                $scope.data = DataService;
+            }
+
+            function SecondController($scope, DataService) {
+                $scope.data = DataService;
+                $scope.reverseMessage = function(message) {
+                  return message.split("").reverse().join("");  
+                };
+            }
+        </script>
+    </body>
+</html>

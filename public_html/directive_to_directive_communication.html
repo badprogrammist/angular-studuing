@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .panel {
+                background: aliceblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="superApp">
+            <superhero strength speed flight>Superman</superhero>
+            <br/>
+            <superhero speed>The Flash</superhero>
+            <br/>
+            <superhero strength>The Hulk</superhero>
+            
+            
+        </div>
+
+
+        <script src="js/libs/angular-1.2.16/angular.min.js"></script>
+        <script type="text/javascript">
+            var superApp = angular.module("superApp", []);
+            
+            superApp.directive("superhero", function() {
+                return {
+                    restrict : "E",
+                    scope : {},// для того, чтобы у каждого директива было свое пространство
+                    controller : function($scope) {
+                        $scope.abilities = [];
+                        this.addStrength = function() {
+                            $scope.abilities.push("strength");
+                        }
+                        this.addSpeed = function() {
+                            $scope.abilities.push("speed");
+                        }
+                        this.addFlight = function() {
+                            $scope.abilities.push("flight");
+                        }
+                    },
+                    link : function(scope, element) {
+                        element.bind("mouseenter" , function() {
+                            console.log(scope.abilities);
+                        })
+                    }
+                };
+            }); 
+            
+            superApp.directive("strength", function() {
+                return {
+                    require : "superhero",
+                    link : function(scope, element, attrs, superheroController) {
+                        superheroController.addStrength();
+                    }
+                }
+            });
+            
+            superApp.directive("speed", function() {
+                return {
+                    require : "superhero",
+                    link : function(scope, element, attrs, superheroController) {
+                        superheroController.addSpeed();
+                    }
+                }
+            });
+            
+            superApp.directive("flight", function() {
+                return {
+                    require : "superhero",
+                    link : function(scope, element, attrs, superheroController) {
+                        superheroController.addFlight();
+                    }
+                }
+            });
+            
+
+            
+        </script>
+    </body>
+</html>

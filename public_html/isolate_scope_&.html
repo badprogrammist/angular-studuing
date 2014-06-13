@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .panel {
+                background: aliceblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="phoneApp">
+            <div ng-controller="PhoneController">
+                <phone dial="callHome(message)"></phone><br/>
+                <phone dial="callHome(message)"></phone><br/>
+                <phone dial="callHome(message)"></phone><br/>
+            </div>
+            
+        </div>
+
+
+        <script src="js/libs/angular-1.2.16/angular.min.js"></script>
+        <script type="text/javascript">
+            var phoneApp = angular.module("phoneApp", []);
+            
+            phoneApp.controller("PhoneController", function($scope){
+                $scope.callHome = function(message) {
+                    alert(message);
+                };
+            });
+            
+            phoneApp.directive("phone", function() {
+                return {
+                    restrict : "E",
+                    scope : {
+                        dial : "&"
+                    },
+                    template : "<input type='text' ng-model='message'></input><button ng-click='dial({message:message})'>Call home</button>"
+                };
+            });
+            
+            
+
+            
+        </script>
+    </body>
+</html>

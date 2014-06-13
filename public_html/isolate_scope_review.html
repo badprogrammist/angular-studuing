@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .panel {
+                background: aliceblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-app="phoneApp">
+            <div ng-controller="PhoneController">
+                <phone number="555-677-343" network="network" make-call="leaveVoiceMail(number,message)"></phone><br/>
+                <phone number="343-543-345" network="network" make-call="leaveVoiceMail(number,message)"></phone><br/>
+                <phone number="911" network="network" make-call="leaveVoiceMail(number,message)"></phone><br/>
+            </div>
+            <!--непонятно почему make-call, а не makeCall-->
+        </div>
+
+
+        <script src="js/libs/angular-1.2.16/angular.min.js"></script>
+        <script type="text/javascript">
+            var phoneApp = angular.module("phoneApp", []);
+            
+            phoneApp.controller("PhoneController", function($scope){
+                $scope.leaveVoiceMail = function(number, message) {
+                    alert("number : "+number + " said : "+message);
+                };
+            });
+            
+            phoneApp.directive("phone", function() {
+                return {
+                    restrict : "E",
+                    scope : {
+                        number : "@",
+                        network : "=",
+                        makeCall : "&"
+                    },
+                    template : "<div class='panel'>" + 
+                            "Number : {{number}}" + 
+                            " Network : <select ng-model='network' ng-options='net for net in networks '></select>"+
+                            "<input type='text' ng-model='message'>"+
+                            "<button ng-click='makeCall({number : number, message : message})'>Call</button>"+
+                            "</div>",
+                    link : function(scope) {
+                        scope.networks = ["MTS", "Beeline", "Megafon"];
+                        scope.network = scope.networks[0];
+                    }
+                };
+            });
+            
+            
+
+            
+        </script>
+    </body>
+</html>
